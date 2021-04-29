@@ -1,0 +1,8 @@
+{% extends "auctions/layout.html" %}
+{% block body %}
+{% for watch in watchlist %}
+<a href="{% url 'listing_page' watch.listing.id %}">
+<li>{{watch.listing.title}} and {{watch.listing.user.username}} and {{watch.listing.starting_bid}} <image src={{watch.listing.image_url}} alt=image_src style="width:20%; height:20%;"></li>
+{% endfor %}
+{{message}}
+{% endblock %}
