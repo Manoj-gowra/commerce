@@ -7,5 +7,22 @@
     <li>{{item.title}} and {{item.user.username}} and {{item.starting_bid}} <image src={{item.image_url}} alt=image_src style="width:20%; height:20%;"></li>
     </a>
     {% endfor %}
-
 {% endblock %}
+<!-- <div class="card mb-3" style="max-width: 720px" >
+  <div class="row g-0">
+    <div class="col-md-4">
+      <img src="{{item.image_url}}" alt="image_src" style="width:100%;height:100%;">
+    </div>
+    <div class="col-md-8">
+    <a href="{% url 'listing_page' item.id %}">
+      <div class="card-body">
+        <h5 class="card-title">{{item.title}}</h5>
+        <p class="card-text">{{item.description}}</p>
+        <p class="card-text"><strong>${{item.starting_bid}}</strong></p>
+      </div>
+    </a>
+    </div>
+  </div>
+</div> -->
+
+

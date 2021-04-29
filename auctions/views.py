@@ -115,8 +115,14 @@ def listing_page(request, listing_id):
         code = True
         return render(request, "auctions/listing_page.html", {"listing": listing, "code": code,   "commentForm": commentForm(),  "Comments": Comments.objects.filter(listing=listing.id)})
     else:
-        # print(WatchList.objects.get(user=user, listing=listing).watching)
-        return render(request, "auctions/listing_page.html", {"listing": listing, "code": code, "BidForm": place_bidForm(),  "commentForm": commentForm(), "watch": WatchList.objects.get(user=user, listing=listing).watching, "Comments": Comments.objects.filter(listing=listing.id)})
+        watchin = WatchList.objects.filter(user=user, listing=listing)
+        if watchin.exists():
+            # print(WatchList.objects.get(user=user, listing=listing).watching)
+            watch = WatchList.objects.get(user=user, listing=listing).watching
+            return render(request, "auctions/listing_page.html", {"listing": listing, "code": code, "BidForm": place_bidForm(),  "commentForm": commentForm(), "watch": watch, "Comments": Comments.objects.filter(listing=listing.id)})
+        else:
+            watch = False
+            return render(request, "auctions/listing_page.html", {"listing": listing, "code": code, "BidForm": place_bidForm(),  "commentForm": commentForm(), "watch": watch, "Comments": Comments.objects.filter(listing=listing.id)})
 
 
 @login_required
