@@ -73,8 +73,11 @@ def create_listing(request):
             description = form.cleaned_data["description"]
             start_bid = form.cleaned_data["start_bid"]
             image_url = form.cleaned_data["image_url"]
-            category_id = Category.objects.get(id=request.POST["categories"])
+            category_id = Category.objects.get(
+                id=request.POST["categories"])
             user = request.user
+            if image_url =='':
+                image_url = 'https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg'
             listings.objects.create(user=user, title=title, description=description,
                                     starting_bid=start_bid, image_url=image_url, category=category_id)
         return HttpResponseRedirect(reverse(index))
@@ -97,7 +100,7 @@ def place_bid(request, listing_id):
                     user=user, list_bid=listing, bid_amount=bid_amount)
                 return HttpResponseRedirect(reverse(index))
             else:
-                return render(request, "auctions/listing_page.html", {"listing": listing, "mssg": "Bid more than the starting bid", "BidForm": place_bidForm()})
+                return render(request, "auctions/listing_page.html", {"listing": listing, "mssg": "Bid should more than the starting bid", "BidForm": place_bidForm()})
     else:
         return render(request, "auctions/listing_page.html", {"BidForm": place_bidForm()})
 
@@ -156,7 +159,7 @@ def Watchlist(request):
     if watchlist.exists():
         return render(request, "auctions/watchlist.html", {"watchlist": watchlist})
     else:
-        return render(request, "auctions/watchlist.html", {"message": "Empty list"})
+        return render(request, "auctions/watchlist.html", {"message": "is Empty "})
 
 
 @login_required
@@ -192,6 +195,15 @@ def categories(request):
 def category(request, category_id):
     listing = listings.objects.filter(category=category_id, sold=False)
     if listing.exists():
-        return render(request, "auctions/list_by_category.html", {'listing': listing})
+        return render(request, "auctions/list_by_category.html", {'listing': listing, "Category":Category.objects.get(pk=category_id).category})
     else:
-        return render(request, "auctions/list_by_category.html", {'message': "No Items Found"})
+        return render(request, "auctions/list_by_category.html", {'message': "No Items Found","Category":Category.objects.get(pk=category_id).category})
+
+@login_required
+def myListings(request):
+    user= request.user
+    listing = listings.objects.filter(user=user)
+    if listing.exists():
+        return render(request, "auctions/myListings.html", {"listing":listing})
+    else:
+        return render(request, "auctions/myListings.html", {"message":"No items Found"})

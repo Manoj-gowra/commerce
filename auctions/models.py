@@ -20,7 +20,7 @@ class listings(models.Model):
     title = models.CharField(max_length=50)
     description = models.TextField(max_length=300, blank=True)
     starting_bid = models.DecimalField(max_digits=5, decimal_places=2)
-    image_url = models.URLField()
+    image_url = models.URLField(blank=True)
     category = models.ForeignKey(
         Category, on_delete=models.CASCADE, related_name="item_category")
     categories = models.ManyToManyField(

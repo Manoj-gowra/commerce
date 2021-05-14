@@ -1,14 +1,9 @@
-{% extends 'auctions/layout.html' %}
+{% extends "auctions/layout.html" %}
+
 {% block body %}
-<!-- {% for item in listing %}
-        <a href="{% url 'listing_page' item.id %}">
-        <li>{{item.title}} and {{item.user.username}} and {{item.starting_bid}} <image src={{item.image_url}} alt=image_src style="width:20%; height:20%;"></li>
-        </a>
-    {% endfor %}
-    <h2>{{message}}</h2> -->
 
 <div class="container">
-    <h2>{{Category}}</h2>
+    <h2>My Listings</h2>
     {% for item in listing %}
     {% if forloop.counter0|divisibleby:"2" %}<div class="row">{% endif%}
         <div class="col-md-6 col-sm-12">
@@ -37,5 +32,6 @@
     {% endfor %}
     <h3>{{message}}</h3>
 </div>
+<!-- endtest -->
 
 {% endblock %}

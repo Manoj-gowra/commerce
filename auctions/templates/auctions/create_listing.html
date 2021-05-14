@@ -1,16 +1,17 @@
 {% extends "auctions/layout.html" %}
 
 {% block body %}
-<form action="{% url 'create_listing' %}" method="post">
-    {% csrf_token %}
-    {{listing_form.as_p}}
-    <select name="categories">
+<div class="container">
+    <form action="{% url 'create_listing' %}" method="post">
+        {% csrf_token %}
+        {{listing_form.as_p}}
+        <select class="form-select col-md-3 my-3" name="categories">
             {% for category in categories %}
-                <option value="{{ category.id }}">{{ category }}</option>
+            <option value="{{ category.id }}">{{ category }}</option>
             {% endfor %}
         </select>
-    <input type="submit" value="submit">
-</form>
+        <center><input class="btn btn-primary" type="submit" value="submit"></center>
 
-
+    </form>
+</div>
 {% endblock %}

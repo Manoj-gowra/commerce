@@ -1,28 +1,36 @@
 {% extends "auctions/layout.html" %}
 
 {% block body %}
+
+<div class="container">
     <h2>Active Listings</h2>
     {% for item in list_items %}
-    <a href="{% url 'listing_page' item.id %}">
-    <li>{{item.title}} and {{item.user.username}} and {{item.starting_bid}} <image src={{item.image_url}} alt=image_src style="width:20%; height:20%;"></li>
-    </a>
+    {% if forloop.counter0|divisibleby:"2" %}<div class="row">{% endif%}
+        <div class="col-md-6 col-sm-12">
+            <a href="{% url 'listing_page' item.id %}" style="color:black;text-decoration-line: none;;">
+                <div class="card mb-3" style="max-width: 540px;max-height: auto;">
+                    <div class="row g-0">
+                        <div class="col-md-4">
+                            <img src="{{item.image_url}}" alt="image_src" style="width:100%; height:100%;">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body" style="min-height: 200px;max-height: 200px;">
+                                <h5 class="card-title" style="color:#1680DA">{{item.title}}</h5>
+                                <div>
+                                    <p class="card-text">{{item.description|truncatechars:100}}</p>
+                                    <p class="card-text"><strong style="color:red">${{item.starting_bid}}</strong></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+        {% if forloop.counter|divisibleby:"2" or forloop.last %}
+    </div>
+    <br>{% endif%}
     {% endfor %}
+</div>
+<!-- endtest -->
+
 {% endblock %}
-<!-- <div class="card mb-3" style="max-width: 720px" >
-  <div class="row g-0">
-    <div class="col-md-4">
-      <img src="{{item.image_url}}" alt="image_src" style="width:100%;height:100%;">
-    </div>
-    <div class="col-md-8">
-    <a href="{% url 'listing_page' item.id %}">
-      <div class="card-body">
-        <h5 class="card-title">{{item.title}}</h5>
-        <p class="card-text">{{item.description}}</p>
-        <p class="card-text"><strong>${{item.starting_bid}}</strong></p>
-      </div>
-    </a>
-    </div>
-  </div>
-</div> -->
-
-
