@@ -149,9 +149,12 @@ def listing_page(request, listing_id):
     user = request.user
     code = False
     if listing.sold is True:
-        winner = Bid.objects.get(
-            bid_amount=listing.starting_bid, list_bid=listing.id
-        ).user.username
+        try:
+            winner = Bid.objects.get(
+                bid_amount=listing.starting_bid, list_bid=listing.id
+            ).user.username
+        except:
+            winner = "NO ONE"
         return render(
             request,
             "auctions/listing_page.html",
@@ -212,13 +215,7 @@ def closing_bid(request, listing_id):
     listing = listings.objects.get(pk=listing_id)
     listing.sold = True
     listing.save()
-    winner = Bid.objects.get(
-        bid_amount=listing.starting_bid, list_bid=listing.id
-    ).user.username
-    listing_page(request, listing.id)
-    return render(
-        request, "auctions/listing_page.html", {"winner": winner, "listing": listing}
-    )
+    return listing_page(request, listing.id)
 
 
 @login_required
