@@ -117,7 +117,7 @@ def place_bid(request, listing_id):
         form = place_bidForm(request.POST)
         if form.is_valid():
             bid_amount = form.cleaned_data["bid_amount"]
-            if bid_amount > listing.starting_bid:
+            if bid_amount > listing.starting_bid and bid_amount<1000:
                 listing.starting_bid = float(bid_amount)
                 listing.save()
                 Bid.objects.create(user=user, list_bid=listing, bid_amount=bid_amount)
@@ -128,7 +128,7 @@ def place_bid(request, listing_id):
                     "auctions/listing_page.html",
                     {
                         "listing": listing,
-                        "mssg": "Bid should more than the starting bid",
+                        "mssg": "Bid should more than the starting bid and less than 1000USD",
                         "BidForm": place_bidForm(),
                         "commentForm": commentForm(),
                         "Comments": Comments.objects.filter(listing=listing.id),
