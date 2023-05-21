@@ -6,6 +6,7 @@
         {% csrf_token %}
         {{listing_form.as_p}}
         <select class="form-select col-md-3 my-3" name="categories">
+            <option value="select" hidden>Select category</option>
             {% for category in categories %}
             <option value="{{ category.id }}">{{ category }}</option>
             {% endfor %}
