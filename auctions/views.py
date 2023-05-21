@@ -95,6 +95,10 @@ def create_listing(request):
             )
         return HttpResponseRedirect(reverse(index))
     else:
+        if Category.objects.all().count()==0:
+            categories = ["Electronics","Books","Kitchen","Clothing","Shoes","Furniture"]
+            for item in categories:
+                Category.objects.create(category=item)
         return render(
             request,
             "auctions/create_listing.html",
